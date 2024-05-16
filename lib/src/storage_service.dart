@@ -19,7 +19,7 @@ class StorageService with Service {
   }
 }
 
-extension ServiceRegistryStorageExtension on ServiceRegistry {
+extension ServiceRegistryStorageExtension on ImmutableServiceRegistry {
   StorageService get storage => getService<StorageService>();
 
   QueryExecutor get storageConnection => storage.connection;

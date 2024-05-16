@@ -19,7 +19,7 @@ class _StoragePackage extends Package {
   }
 }
 
-extension ServiceRegistryStoragePackageExtension on ServiceRegistry {
+extension ServiceRegistryStoragePackageExtension on MutableServiceRegistry {
   void addStorage({String databaseName = defaultDatabaseName}) {
     final package = _StoragePackage(databaseName: databaseName);
     register(
