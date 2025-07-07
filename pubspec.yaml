@@ -1,0 +1,33 @@
+name: eni_storage
+description: "Eniware Systems App Storage Package"
+version: 2.0.2
+homepage: https://eniware-systems.de
+publish_to: https://gitea.eniware-systems.de/api/packages/eni-flutter/pub
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.32.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  eni_svc:
+    hosted: https://gitea.eniware-systems.de/api/packages/eni-flutter/pub
+    version: ^2.0.4
+  eni_utils:
+    hosted: https://gitea.eniware-systems.de/api/packages/eni-flutter/pub
+    version: ^2.0.1
+  drift: ^2.17.0
+  path_provider: ^2.1.3
+  path: ^1.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.2
+
+flutter:
+  assets:
+    - sqlite3.wasm
+    - drift_worker.js
