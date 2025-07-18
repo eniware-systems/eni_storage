@@ -63,12 +63,12 @@ abstract class StorageDriver {
 final file = File('$appSupportDir/$databaseName.sqlite');
 return NativeDatabase.createInBackground(file);
 ```
-## Web Storage
+### Web Storage
 ```dart
 return WasmDatabase.open(
   databaseName: databaseName,
-  sqlite3Uri: sqlite3.wasm,
-  driftWorkerUri: drift_worker.js,
+  sqlite3Uri: Uri.base.replace(path: "/assets/packages/eni_storage/sqlite3.wasm", fragment: ""),
+  driftWorkerUri: Uri.base.replace(path: "/assets/packages/eni_storage/drift_worker.js", fragment: ""),
 );
 ```
 ## Example Drift Database
@@ -97,12 +97,12 @@ flutter:
 These files are required by Drift’s WASM backend.
 
 ## Utilities
-Access from Services
+### Access from Services
 ```dart
 services.storage          // StorageService instance
 services.storageConnection // QueryExecutor for Drift
 ```
-Access from Widget Context
+### Access from Widget Context
 ```dart
 context.storage
 context.storageConnection
@@ -113,7 +113,7 @@ context.storageConnection
 
 - Default native path: `getApplicationSupportDirectory()`
 
-- Default WASM files: `/assets/packages/eni_storage/sqlite3.wasm` and `drift_worker.js`
+- Default WASM files: `/assets/packages/eni_storage/sqlite3.wasm` and `/assets/packages/eni_storage/drift_worker.js`
 
 ## Based On
 
