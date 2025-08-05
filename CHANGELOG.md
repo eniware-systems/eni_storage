@@ -1,3 +1,9 @@
+## 2.0.4
+
+- Updated Dependencies:
+    eni_svc: ^2.0.6
+    eni_utils: ^2.0.3
+
 ## 2.0.3
 
 - Updated Dependencies:
