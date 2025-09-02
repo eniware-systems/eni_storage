@@ -1,3 +1,7 @@
+## 2.0.5
+
+- updated drift_worker.js and sqlite3.wasm
+
 ## 2.0.4
 
 - Updated Dependencies:
