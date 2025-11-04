@@ -1,6 +1,8 @@
 # eni_storage – Drift-Based Storage Driver for Flutter
 
-**eni_storage** provides a unified, cross-platform storage solution for Flutter using [Drift](https://drift.simonbinder.eu/). It automatically selects the correct database driver depending on the platform (native or web) and integrates cleanly into apps built on the [`eni_svc`](https://github.com/eniware-systems/eni_svc) architecture.
+**eni_storage** provides a unified, cross-platform storage solution for Flutter using [Drift](https://drift.simonbinder.eu/). 
+It automatically selects the correct database driver depending on the platform (native or web) and integrates cleanly 
+into apps built on the [`eni_svc`](https://github.com/eniware-systems/eni_svc) architecture.
 
 ---
 
@@ -23,27 +25,37 @@ dart pub add eni_storage
 ```
 
 ## Usage
+
 1. Register the storage package in your app
+    ```dart
+    Future<void> main() async {
+      WidgetsFlutterBinding.ensureInitialized();
+      runApp(
+        ServiceScope(child: MyApp())
+          ..addStorage(databaseName: "my_database")
+      );
+    }
+    ```
+    This registers a `StorageService` and initializes a Drift connection for the given database name.
+    The `ServiceScope` is part of [eni_svc](https://github.com/eniware-systems/eni_svc).
 
-```dart
-services.addStorage(databaseName: "my_database");
-```
 
-This registers a StorageService and initializes a Drift connection for the given database name.
 2. Access the storage connection
 
-From any service:
-```dart
-final executor = services.storageConnection;
-```
-From a widget:
-```dart
-final db = context.storageConnection;
-```
-You can then pass this `QueryExecutor` into your `DriftDatabase` class.
+    From any service:
+    ```dart
+    final executor = services.storageConnection;
+    ```
+    From a widget:
+    ```dart
+    final executor = context.storageConnection;
+    ```
+    You can then pass this `QueryExecutor` into your `DriftDatabase` class.
+
 ## Architecture
 
 `eni_storage` uses a driver-based architecture. Depending on the platform:
+
 | Platform       | Driver                | Backend                             |
 | -------------- | --------------------- | ----------------------------------- |
 | Mobile/Desktop | `NativeStorageDriver` | SQLite via `NativeDatabase`         |
@@ -87,14 +99,18 @@ final db = MyDatabase(context.storageConnection);
 ```
 ## Web Setup
 
-Make sure the following assets are bundled in your web build:
-```yaml
-flutter:
-  assets:
-    - assets/packages/eni_storage/sqlite3.wasm
-    - assets/packages/eni_storage/drift_worker.js
+The eni storage package contains these two files required for Drift's WASM backend:
 ```
-These files are required by Drift’s WASM backend.
+ assets/packages/eni_storage/sqlite3.wasm
+ assets/packages/eni_storage/drift_worker.js
+```
+These files match the Drift version used by the eni storage package. They will automatically be packed into the build.
+The target folder is `build/flutter_assets/packages/eni_storage/`. You may verify their existence in the build folder 
+after a full web build.
+
+These files were obtained from [Drift-Web](https://drift.simonbinder.eu/Platforms/web/) and need to match 
+the used Drift version (otherwise some exceptions will occur). So it is **recommended** to use the **same** Drift version 
+as the eni storage package declares in its `pubspec.yaml`.
 
 ## Utilities
 ### Access from Services
@@ -131,8 +147,15 @@ This project is licensed under the MIT License.
 
 Copyright © 2025 Eniware Systems GmbH
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation 
+files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy,
+modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the 
+Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the 
+Software.
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
